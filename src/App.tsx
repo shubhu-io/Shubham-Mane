@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Layout from './components/layout/Layout'
 import LoadingSkeleton from './components/ui/LoadingSkeleton'
@@ -9,7 +9,6 @@ const Home = lazy(() => import('./pages/Home'))
 const Blog = lazy(() => import('./pages/Blog'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
 const Resume = lazy(() => import('./pages/Resume'))
-const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
   const location = useLocation()
@@ -25,7 +24,7 @@ export default function App() {
               <Route path="blog" element={<Blog />} />
               <Route path="blog/:slug" element={<BlogPost />} />
               <Route path="resume" element={<Resume />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>
         </AnimatePresence>
