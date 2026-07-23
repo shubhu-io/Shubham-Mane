@@ -9,7 +9,7 @@ export default function NotFound() {
       exit={{ opacity: 0 }}
       className="min-h-[80vh] flex items-center justify-center px-4"
     >
-      <div className="text-center max-w-md">
+      <div className="text-center max-w-lg">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -34,14 +34,14 @@ export default function NotFound() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-gray-500 dark:text-gray-400 mb-8"
         >
-          The page you're looking for doesn't exist or has been moved.
+          The page you're looking for doesn't exist or has been moved. Let me help you find your way back.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-wrap items-center justify-center gap-4"
+          className="flex flex-wrap items-center justify-center gap-4 mb-10"
         >
           <Link to="/" className="btn-primary">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,6 +55,71 @@ export default function NotFound() {
             </svg>
             Visit Blog
           </Link>
+          <a
+            href="/Shubham-Mane/Shubham_Mane_Resume.pdf"
+            download
+            className="btn-secondary"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Resume
+          </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="card-glow text-left"
+        >
+          <h3 className="text-sm font-semibold mb-3 text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Quick Links
+          </h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Link
+              to="/#skills"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              Skills
+            </Link>
+            <Link
+              to="/#projects"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              Projects
+            </Link>
+            <Link
+              to="/#experience"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+              Experience
+            </Link>
+            <Link
+              to="/#education"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+              Education
+            </Link>
+            <Link
+              to="/#certificates"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+              Certifications
+            </Link>
+            <Link
+              to="/resume"
+              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+              Full Resume
+            </Link>
+          </div>
         </motion.div>
       </div>
     </motion.div>
