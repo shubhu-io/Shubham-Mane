@@ -1,6 +1,7 @@
 # Portfolio Website
 
-A modern, responsive personal portfolio website built with React, TypeScript, and Vite. Optimized for GitHub Pages deployment.
+A modern, responsive personal portfolio website built with React, TypeScript, and Vite.  
+**Live:** [https://shubhu-io.github.io/Shubham-Mane/](https://shubhu-io.github.io/Shubham-Mane/)
 
 ## Features
 

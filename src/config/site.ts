@@ -15,9 +15,15 @@ export const siteConfig = {
   },
   social: {
     github: 'https://github.com/shubhu-io',
-    linkedin: 'https://linkedin.com/in/shubham-mane-dev',
-    twitter: 'https://twitter.com/shubhu-io',
+    linkedin: 'https://www.linkedin.com/in/shubham-mane-dev/',
+    twitter: 'https://x.com/shubh__m_',
+    reddit: 'https://www.reddit.com/user/shubhu_m/',
     pinterest: 'https://in.pinterest.com/shubhvibessss/',
+    tumblr: 'https://www.tumblr.com/blog/shubhustuff',
+    instagram: 'https://www.instagram.com/shubh.now/',
+    substack: 'https://substack.com/@shubhvibes',
+    discord: 'https://discordapp.com/users/568683246502674434',
+    medium: 'https://medium.com/@shubhxplore',
     email: 'shubhamane10@gmail.com',
   },
   github: {
