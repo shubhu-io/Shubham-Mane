@@ -7,20 +7,19 @@ import './index.css'
 
 function RedirectHandler({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
-  const [ready, setReady] = React.useState(false)
+  const handled = React.useRef(false)
 
   React.useEffect(() => {
+    if (handled.current) return
+    handled.current = true
     const params = new URLSearchParams(window.location.search)
     const redirectPath = params.get('redirect') || sessionStorage.getItem('redirect')
     if (redirectPath && redirectPath !== '/') {
       sessionStorage.removeItem('redirect')
-      navigate(redirectPath, { replace: true })
-    } else {
-      setReady(true)
+      navigate('/' + redirectPath, { replace: true })
     }
   }, [navigate])
 
-  if (!ready && window.location.search.includes('redirect=')) return null
   return <>{children}</>
 }
 
