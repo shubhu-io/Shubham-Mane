@@ -4,7 +4,6 @@ import About from '../components/sections/About'
 import Skills from '../components/sections/Skills'
 import Experience from '../components/sections/Experience'
 import Education from '../components/sections/Education'
-import Projects from '../components/sections/Projects'
 import GitHubDashboard from '../components/sections/GitHubDashboard'
 import Certificates from '../components/sections/Certificates'
 import TimelineSection from '../components/sections/TimelineSection'
@@ -23,7 +22,6 @@ export default function Home() {
       <Skills />
       <Experience />
       <Education />
-      <Projects />
       <GitHubDashboard />
       <Certificates />
       <TimelineSection />
