@@ -29,7 +29,7 @@ export const siteConfig = {
     hackerrank: 'https://www.hackerrank.com/shubhamane10',
     devto: 'https://dev.to/shubhxplore',
     portfolio: 'https://shubhu-io.github.io/Shubham-Mane/',
-    resume: '/Shubham_Mane_Resume.pdf',
+    resume: `${import.meta.env.BASE_URL}Shubham_Mane_Resume.pdf`,
   },
   github: {
     username: 'shubhu-io',

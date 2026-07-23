@@ -118,7 +118,7 @@ export default function Hero() {
             Contact Me
           </a>
           <a
-            href="/Shubham_Mane_Resume.pdf"
+            href={siteConfig.social.resume}
             download
             className="btn-secondary"
           >

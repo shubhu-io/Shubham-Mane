@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { siteConfig } from '../config/site'
 
 export default function NotFound() {
   return (
@@ -56,7 +57,7 @@ export default function NotFound() {
             Visit Blog
           </Link>
           <a
-            href="/Shubham-Mane/Shubham_Mane_Resume.pdf"
+            href={siteConfig.social.resume}
             download
             className="btn-secondary"
           >
