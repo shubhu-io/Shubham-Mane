@@ -3,6 +3,27 @@ import { Link } from 'react-router-dom'
 
 const posts = [
   {
+    slug: 'devops-with-terraform-and-aws',
+    title: 'DevOps with Terraform & AWS: IaC Best Practices',
+    description: 'A comprehensive guide to Infrastructure as Code using Terraform on AWS — from project structure to remote state management.',
+    date: '2024-07-15',
+    tags: ['DevOps', 'Terraform', 'AWS', 'IaC'],
+    readingTime: 10,
+    content: `Infrastructure as Code (IaC) transforms how we manage cloud resources. Here's how to build a production-ready Terraform workflow on AWS.
+
+## Project Structure
+
+Organize Terraform code into modular, reusable components. Each module encapsulates a logical resource group like networking, compute, or storage.
+
+## Remote State Management
+
+Store state files in S3 with DynamoDB locking to enable team collaboration and prevent state corruption.
+
+## Best Practices
+
+Use variables for configuration, outputs for exposing resource attributes, and workspaces for managing multiple environments like dev, staging, and production. Always pin provider versions and use terraform plan in CI/CD pipelines.`,
+  },
+  {
     slug: 'building-scalable-react-apps',
     title: 'Building Scalable React Applications',
     description: 'Best practices for structuring large-scale React applications with TypeScript.',

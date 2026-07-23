@@ -2,6 +2,48 @@ import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const posts: Record<string, { title: string; date: string; tags: string[]; readingTime: number; content: string }> = {
+  'devops-with-terraform-and-aws': {
+    title: 'DevOps with Terraform & AWS: IaC Best Practices',
+    date: '2024-07-15',
+    tags: ['DevOps', 'Terraform', 'AWS', 'IaC'],
+    readingTime: 10,
+    content: `Infrastructure as Code (IaC) transforms how we manage cloud resources. Here's how to build a production-ready Terraform workflow on AWS.
+
+## Project Structure
+
+Organize Terraform code into modular, reusable components. Each module encapsulates a logical resource group like networking, compute, or storage.
+
+\`\`\`
+modules/
+├── networking/
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+├── compute/
+├── storage/
+└── database/
+\`\`\`
+
+## Remote State Management
+
+Store state files in S3 with DynamoDB locking to enable team collaboration and prevent state corruption.
+
+\`\`\`hcl
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "prod/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
+\`\`\`
+
+## Best Practices
+
+Use variables for configuration, outputs for exposing resource attributes, and workspaces for managing multiple environments like dev, staging, and production. Always pin provider versions and use terraform plan in CI/CD pipelines.`,
+  },
   'building-scalable-react-apps': {
     title: 'Building Scalable React Applications',
     date: '2024-03-15',
