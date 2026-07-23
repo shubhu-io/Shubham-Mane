@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://shubhu.io/sitemap.xml
+Host: https://shubhu.io
