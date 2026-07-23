@@ -97,11 +97,38 @@ export default function Contact() {
         </motion.div>
 
         <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.35 }}
+          className="flex justify-center mt-8"
+        >
+          <div className="card-glow p-4 inline-flex rounded-xl">
+            <div
+              className="badge-base LI-profile-badge"
+              data-locale="en_US"
+              data-size="medium"
+              data-theme="light"
+              data-type="HORIZONTAL"
+              data-vanity="shubham-mane-dev"
+              data-version="v1"
+            >
+              <a
+                className="badge-base__link LI-simple-link"
+                href="https://in.linkedin.com/in/shubham-mane-dev?trk=profile-badge"
+              >
+                Shubham M.
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.4 }}
-          className="flex justify-center gap-6 mt-8"
+          transition={{ duration: 0.4, delay: 0.45 }}
+          className="flex justify-center gap-6 mt-6"
         >
           <a
             href={siteConfig.social.github}
