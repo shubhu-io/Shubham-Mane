@@ -8,7 +8,7 @@ export const siteConfig = {
     name: 'Shubham Mane',
     email: 'shubhamane10@gmail.com',
     username: 'shubhu-io',
-    avatar: 'https://avatars.githubusercontent.com/u/0?v=4',
+    avatar: 'https://avatars.githubusercontent.com/u/54975871?v=4',
     bio: 'Entry-level AWS Cloud/DevOps Engineer with hands-on experience designing, provisioning, and automating cloud infrastructure on AWS',
     location: 'Chhatrapati Sambhaji Nagar, Maharashtra',
     available: true,
