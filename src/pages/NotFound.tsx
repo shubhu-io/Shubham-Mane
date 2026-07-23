@@ -56,7 +56,7 @@ export default function NotFound() {
             Visit Blog
           </Link>
           <a
-            href="/Shubham-Mane/Shubham_Mane_Resume.pdf"
+            href="/Shubham_Mane_Resume.pdf"
             download
             className="btn-secondary"
           >
