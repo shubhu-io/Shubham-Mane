@@ -1,11 +1,11 @@
 export const siteConfig = {
-  name: 'Shubham',
+  name: 'Shubham Mane',
   title: 'AWS Cloud Engineer | DevOps Engineer',
   description: 'AWS Cloud Engineer & DevOps Engineer portfolio - cloud infrastructure, IaC, and automation',
   url: 'https://shubhu.io',
   basePath: '/',
   author: {
-    name: 'Shubham',
+    name: 'Shubham Mane',
     email: 'shubhamane10@gmail.com',
     username: 'shubhu-io',
     avatar: 'https://avatars.githubusercontent.com/u/0?v=4',
