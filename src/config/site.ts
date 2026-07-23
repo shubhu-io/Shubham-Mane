@@ -25,6 +25,11 @@ export const siteConfig = {
     discord: 'https://discordapp.com/users/568683246502674434',
     medium: 'https://medium.com/@shubhxplore',
     email: 'shubhamane10@gmail.com',
+    leetcode: 'https://leetcode.com/u/shubhu_m/',
+    hackerrank: 'https://www.hackerrank.com/profile/shubhamane10',
+    devto: 'https://dev.to/shubhuio',
+    portfolio: 'https://shubhu-io.github.io/Shubham-Mane/',
+    resume: '/Shubham_Mane_Resume.pdf',
   },
   github: {
     username: 'shubhu-io',
