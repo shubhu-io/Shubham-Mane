@@ -117,7 +117,7 @@ export default function Contact() {
                 className="badge-base__link LI-simple-link"
                 href="https://in.linkedin.com/in/shubham-mane-dev?trk=profile-badge"
               >
-                Shubham M.
+                Shubham Mane
               </a>
             </div>
           </div>

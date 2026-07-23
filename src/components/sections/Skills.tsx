@@ -73,6 +73,43 @@ const categories = [
       { name: 'Java', icon: '☕', level: 2 },
       { name: 'SQL', icon: '🗃️', level: 3 },
       { name: 'YAML / JSON', icon: '📋', level: 4 },
+      { name: 'R', icon: '📊', level: 2 },
+    ],
+  },
+  {
+    key: 'ds',
+    label: 'Data Science & AI',
+    subtitle: 'ML · Deep Learning · NLP · Gen AI',
+    icon: '🤖',
+    span: 'md:col-span-4',
+    count: 7,
+    sparkline: [35, 50, 45, 55, 50, 60, 55],
+    skills: [
+      { name: 'Machine Learning', icon: '🤖', level: 3 },
+      { name: 'Deep Learning', icon: '🧠', level: 2 },
+      { name: 'NLP / Text Analytics', icon: '💬', level: 2 },
+      { name: 'Computer Vision', icon: '👁️', level: 2 },
+      { name: 'LLMs / Gen AI', icon: '⚡', level: 3 },
+      { name: 'Statistics & Probability', icon: '📊', level: 3 },
+      { name: 'Data Analysis', icon: '📈', level: 3 },
+    ],
+  },
+  {
+    key: 'dt',
+    label: 'Data Tools & Libraries',
+    subtitle: 'Analysis · Visualization · Notebooks',
+    icon: '📊',
+    span: 'md:col-span-3',
+    count: 7,
+    sparkline: [40, 55, 50, 60, 55, 65, 60],
+    skills: [
+      { name: 'Pandas / NumPy', icon: '🐼', level: 3 },
+      { name: 'Matplotlib / Seaborn', icon: '📉', level: 3 },
+      { name: 'Scikit-learn', icon: '🔬', level: 2 },
+      { name: 'TensorFlow / PyTorch', icon: '🧠', level: 2 },
+      { name: 'Excel / Sheets', icon: '📗', level: 3 },
+      { name: 'Anaconda', icon: '🟢', level: 3 },
+      { name: 'Data Visualization', icon: '📊', level: 3 },
     ],
   },
   {
@@ -80,7 +117,7 @@ const categories = [
     label: 'CS Fundamentals',
     subtitle: 'Core Engineering Concepts',
     icon: '🎓',
-    span: 'md:col-span-4',
+    span: 'md:col-span-6',
     count: 6,
     sparkline: [45, 55, 50, 60, 55, 65],
     skills: [
@@ -97,7 +134,7 @@ const categories = [
     label: 'Monitoring & Tools',
     subtitle: 'Observability · Productivity · OS',
     icon: '🛠️',
-    span: 'md:col-span-4',
+    span: 'md:col-span-6',
     count: 6,
     sparkline: [55, 60, 45, 65, 50, 70],
     skills: [
@@ -112,7 +149,7 @@ const categories = [
 ]
 
 type ColorTheme = 'default' | 'neon' | 'ocean' | 'forest' | 'sunset'
-type FilterKey = 'all' | 'aws' | 'cicd' | 'iac' | 'lang' | 'cs' | 'tools'
+type FilterKey = 'all' | 'aws' | 'cicd' | 'iac' | 'lang' | 'ds' | 'dt' | 'cs' | 'tools'
 
 const filters: { key: FilterKey; label: string; icon: string }[] = [
   { key: 'all', label: 'All', icon: '📌' },
@@ -120,6 +157,8 @@ const filters: { key: FilterKey; label: string; icon: string }[] = [
   { key: 'cicd', label: 'CI/CD', icon: '🔄' },
   { key: 'iac', label: 'IaC', icon: '🏗️' },
   { key: 'lang', label: 'Languages', icon: '💻' },
+  { key: 'ds', label: 'Data Sci/AI', icon: '🤖' },
+  { key: 'dt', label: 'Data Tools', icon: '📊' },
   { key: 'cs', label: 'CS Core', icon: '🎓' },
   { key: 'tools', label: 'Tools', icon: '🛠️' },
 ]
@@ -130,6 +169,8 @@ const colorThemes: Record<ColorTheme, Record<string, { gradient: string; border:
     cicd: { gradient: 'from-purple-500 to-pink-500', border: 'border-purple-500/30', bg: 'bg-purple-500/10', text: 'text-purple-600 dark:text-purple-400', dot: 'bg-purple-400' },
     iac: { gradient: 'from-blue-500 to-cyan-500', border: 'border-blue-500/30', bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400', dot: 'bg-blue-400' },
     lang: { gradient: 'from-green-500 to-emerald-500', border: 'border-green-500/30', bg: 'bg-green-500/10', text: 'text-green-600 dark:text-green-400', dot: 'bg-green-400' },
+    ds: { gradient: 'from-rose-500 to-pink-600', border: 'border-rose-500/30', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-400' },
+    dt: { gradient: 'from-violet-500 to-indigo-500', border: 'border-violet-500/30', bg: 'bg-violet-500/10', text: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-400' },
     cs: { gradient: 'from-cyan-500 to-teal-500', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10', text: 'text-cyan-600 dark:text-cyan-400', dot: 'bg-cyan-400' },
     tools: { gradient: 'from-yellow-500 to-orange-500', border: 'border-yellow-500/30', bg: 'bg-yellow-500/10', text: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-400' },
   },
@@ -138,6 +179,8 @@ const colorThemes: Record<ColorTheme, Record<string, { gradient: string; border:
     cicd: { gradient: 'from-violet-500 to-purple-500', border: 'border-violet-500/40', bg: 'bg-violet-500/15', text: 'text-violet-400 dark:text-violet-300', dot: 'bg-violet-400' },
     iac: { gradient: 'from-cyan-400 to-blue-500', border: 'border-cyan-400/40', bg: 'bg-cyan-400/15', text: 'text-cyan-400 dark:text-cyan-300', dot: 'bg-cyan-400' },
     lang: { gradient: 'from-lime-400 to-green-500', border: 'border-lime-400/40', bg: 'bg-lime-400/15', text: 'text-lime-400 dark:text-lime-300', dot: 'bg-lime-400' },
+    ds: { gradient: 'from-pink-400 to-rose-400', border: 'border-pink-400/40', bg: 'bg-pink-400/15', text: 'text-pink-400 dark:text-pink-300', dot: 'bg-pink-400' },
+    dt: { gradient: 'from-indigo-400 to-violet-400', border: 'border-indigo-400/40', bg: 'bg-indigo-400/15', text: 'text-indigo-400 dark:text-indigo-300', dot: 'bg-indigo-400' },
     cs: { gradient: 'from-teal-400 to-cyan-500', border: 'border-teal-400/40', bg: 'bg-teal-400/15', text: 'text-teal-400 dark:text-teal-300', dot: 'bg-teal-400' },
     tools: { gradient: 'from-amber-400 to-orange-500', border: 'border-amber-400/40', bg: 'bg-amber-400/15', text: 'text-amber-400 dark:text-amber-300', dot: 'bg-amber-400' },
   },
@@ -146,6 +189,8 @@ const colorThemes: Record<ColorTheme, Record<string, { gradient: string; border:
     cicd: { gradient: 'from-indigo-500 to-blue-600', border: 'border-indigo-500/30', bg: 'bg-indigo-500/10', text: 'text-indigo-600 dark:text-indigo-400', dot: 'bg-indigo-400' },
     iac: { gradient: 'from-cyan-500 to-blue-500', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10', text: 'text-cyan-600 dark:text-cyan-400', dot: 'bg-cyan-400' },
     lang: { gradient: 'from-teal-500 to-emerald-600', border: 'border-teal-500/30', bg: 'bg-teal-500/10', text: 'text-teal-600 dark:text-teal-400', dot: 'bg-teal-400' },
+    ds: { gradient: 'from-pink-600 to-rose-700', border: 'border-pink-600/30', bg: 'bg-pink-600/10', text: 'text-pink-600 dark:text-pink-400', dot: 'bg-pink-400' },
+    dt: { gradient: 'from-indigo-500 to-violet-600', border: 'border-indigo-500/30', bg: 'bg-indigo-500/10', text: 'text-indigo-600 dark:text-indigo-400', dot: 'bg-indigo-400' },
     cs: { gradient: 'from-sky-400 to-cyan-500', border: 'border-sky-400/30', bg: 'bg-sky-400/10', text: 'text-sky-600 dark:text-sky-400', dot: 'bg-sky-400' },
     tools: { gradient: 'from-blue-400 to-indigo-500', border: 'border-blue-400/30', bg: 'bg-blue-400/10', text: 'text-blue-600 dark:text-blue-400', dot: 'bg-blue-400' },
   },
@@ -154,6 +199,8 @@ const colorThemes: Record<ColorTheme, Record<string, { gradient: string; border:
     cicd: { gradient: 'from-emerald-500 to-green-600', border: 'border-emerald-500/30', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-400' },
     iac: { gradient: 'from-green-600 to-emerald-700', border: 'border-green-600/30', bg: 'bg-green-600/10', text: 'text-green-600 dark:text-green-400', dot: 'bg-green-400' },
     lang: { gradient: 'from-lime-500 to-green-500', border: 'border-lime-500/30', bg: 'bg-lime-500/10', text: 'text-lime-600 dark:text-lime-400', dot: 'bg-lime-400' },
+    ds: { gradient: 'from-rose-600 to-pink-700', border: 'border-rose-600/30', bg: 'bg-rose-600/10', text: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-400' },
+    dt: { gradient: 'from-violet-600 to-indigo-700', border: 'border-violet-600/30', bg: 'bg-violet-600/10', text: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-400' },
     cs: { gradient: 'from-teal-600 to-emerald-600', border: 'border-teal-600/30', bg: 'bg-teal-600/10', text: 'text-teal-600 dark:text-teal-400', dot: 'bg-teal-400' },
     tools: { gradient: 'from-yellow-600 to-amber-700', border: 'border-yellow-600/30', bg: 'bg-yellow-600/10', text: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-400' },
   },
@@ -162,6 +209,8 @@ const colorThemes: Record<ColorTheme, Record<string, { gradient: string; border:
     cicd: { gradient: 'from-pink-500 to-rose-500', border: 'border-pink-500/30', bg: 'bg-pink-500/10', text: 'text-pink-600 dark:text-pink-400', dot: 'bg-pink-400' },
     iac: { gradient: 'from-orange-500 to-red-500', border: 'border-orange-500/30', bg: 'bg-orange-500/10', text: 'text-orange-600 dark:text-orange-400', dot: 'bg-orange-400' },
     lang: { gradient: 'from-amber-500 to-orange-500', border: 'border-amber-500/30', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400', dot: 'bg-amber-400' },
+    ds: { gradient: 'from-red-400 to-rose-400', border: 'border-red-400/30', bg: 'bg-red-400/10', text: 'text-red-600 dark:text-red-400', dot: 'bg-red-400' },
+    dt: { gradient: 'from-pink-400 to-rose-500', border: 'border-pink-400/30', bg: 'bg-pink-400/10', text: 'text-pink-600 dark:text-pink-400', dot: 'bg-pink-400' },
     cs: { gradient: 'from-rose-400 to-pink-500', border: 'border-rose-400/30', bg: 'bg-rose-400/10', text: 'text-rose-600 dark:text-rose-400', dot: 'bg-rose-400' },
     tools: { gradient: 'from-yellow-500 to-amber-500', border: 'border-yellow-500/30', bg: 'bg-yellow-500/10', text: 'text-yellow-600 dark:text-yellow-400', dot: 'bg-yellow-400' },
   },
@@ -278,7 +327,7 @@ export default function Skills() {
           <p className="section-subtitle mb-8">
             <span className="inline-flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-current" />
-              39 technologies across 6 domains
+              56 technologies across 8 domains
               <span className="w-1 h-1 rounded-full bg-current" />
             </span>
           </p>

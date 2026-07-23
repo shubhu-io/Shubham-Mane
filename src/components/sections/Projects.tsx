@@ -1,219 +1,272 @@
-import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface Project {
   id: string
   title: string
-  description: string
-  image: string
+  goal: string
+  work: string
+  outcome: string
   techStack: string[]
   githubUrl: string
   liveUrl?: string
   category: string
-  stars: number
-  forks: number
 }
 
 const projects: Project[] = [
   {
     id: '1',
     title: 'AWS Highly Available Web Infrastructure',
-    description: 'Designed a custom VPC with public/private subnets, EC2 instances with IAM roles, ALB with Auto Scaling, EBS/EFS storage, RDS backend, and CloudWatch monitoring — all per AWS Well-Architected practices.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop',
+    goal: 'Build a fault-tolerant, production-grade web infrastructure on AWS with zero single point of failure.',
+    work: 'Designed a custom VPC with public/private subnets across 2 AZs. Deployed EC2 instances with IAM roles behind an ALB with Auto Scaling. Attached EFS for shared storage, RDS for backend database, and CloudWatch for full observability — following AWS Well-Architected best practices.',
+    outcome: 'Fault-tolerant architecture that auto-scales under load, survives AZ outages, and provides full monitoring visibility.',
     techStack: ['AWS', 'EC2', 'VPC', 'IAM', 'ALB', 'Auto Scaling', 'RDS', 'CloudWatch'],
     githubUrl: 'https://github.com/shubhu-io',
-    category: 'backend',
-    stars: 0,
-    forks: 0,
+    category: 'cloud',
   },
   {
     id: '2',
     title: 'Infrastructure Automation with Terraform',
-    description: 'Automated end-to-end provisioning of EC2, VPC, IAM, Security Groups, S3, EBS, EFS, ALB, and Auto Scaling resources using Terraform with modular, reusable modules and remote state management.',
-    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=400&fit=crop',
+    goal: 'Eliminate manual provisioning by automating end-to-end cloud infrastructure deployment with reusable IaC.',
+    work: 'Wrote modular Terraform configurations for EC2, VPC, IAM, Security Groups, S3, EBS, EFS, ALB, and Auto Scaling. Used S3 + DynamoDB for remote state management with state locking, and parameterized modules for environment reuse.',
+    outcome: 'Full infrastructure provisioned or destroyed with a single command — consistent, repeatable, and audit-ready.',
     techStack: ['Terraform', 'AWS', 'IaC', 'VPC', 'EC2', 'S3', 'IAM'],
     githubUrl: 'https://github.com/shubhu-io',
-    category: 'backend',
-    stars: 0,
-    forks: 0,
+    category: 'devops',
   },
   {
     id: '3',
     title: 'CloudVault - Automated Backup & DR',
-    description: 'Built an automated backup and disaster-recovery pipeline using AWS S3 and PowerShell that compresses, uploads, and versions data, with a restore workflow for fast recovery from data loss or system failure.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+    goal: 'Build an automated backup pipeline with versioning and a fast restore workflow for critical data.',
+    work: 'Created a PowerShell + AWS S3 system that compresses, uploads, and versions data. Added EFS snapshot automation and a restore script for rapid recovery from accidental deletion, corruption, or system failure.',
+    outcome: 'Automated daily backups with 30-day version history; one-command restore in under 5 minutes.',
     techStack: ['AWS S3', 'PowerShell', 'Linux', 'EFS', 'Automation'],
     githubUrl: 'https://github.com/shubhu-io/CloudVault-DR-Automation',
-    category: 'backend',
-    stars: 0,
-    forks: 0,
+    category: 'devops',
   },
 ]
 
-const categories = ['all', 'frontend', 'backend', 'fullstack', 'ai', 'cloud', 'devops']
+const filters = [
+  { key: 'all', label: 'All', icon: '📌' },
+  { key: 'cloud', label: 'Cloud', icon: '☁️' },
+  { key: 'devops', label: 'DevOps', icon: '🚀' },
+]
+
+const accentColors: Record<string, string> = {
+  cloud: 'border-l-blue-500',
+  devops: 'border-l-purple-500',
+}
+
+const dotColors: Record<string, string> = {
+  cloud: 'bg-blue-500',
+  devops: 'bg-purple-500',
+}
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.97 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { delay: i * 0.12, duration: 0.5, ease: 'easeOut' },
+  }),
+}
+
+const lineVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: 0.2 + i * 0.08, duration: 0.4, ease: 'easeOut' },
+  }),
+}
+
+const tagVariants = {
+  hidden: { opacity: 0, scale: 0.6 },
+  visible: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { delay: 0.5 + i * 0.035, duration: 0.3, ease: 'backOut' },
+  }),
+}
 
 export default function Projects() {
   const [filter, setFilter] = useState('all')
-  const [search, setSearch] = useState('')
-  const [sort, setSort] = useState<'stars' | 'updated' | 'name'>('stars')
 
-  const filtered = useMemo(() => {
-    let result = [...projects]
-
-    if (filter !== 'all') {
-      result = result.filter((p) => p.category === filter)
-    }
-
-    if (search) {
-      const q = search.toLowerCase()
-      result = result.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.techStack.some((t) => t.toLowerCase().includes(q)),
-      )
-    }
-
-    result.sort((a, b) => {
-      if (sort === 'stars') return b.stars - a.stars
-      if (sort === 'name') return a.title.localeCompare(b.title)
-      return 0
-    })
-
-    return result
-  }, [filter, search, sort])
+  const filtered = filter === 'all'
+    ? projects
+    : projects.filter(p => p.category === filter)
 
   return (
-    <section id="projects" className="py-20 px-4">
+    <section id="projects" className="py-20 px-4 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
         >
           <h2 className="section-title">
             Featured <span className="gradient-text">Projects</span>
           </h2>
-          <p className="section-subtitle">Some things I've built</p>
+          <p className="section-subtitle mb-8">Real infrastructure I've designed, built, and automated</p>
         </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <div className="flex-1 relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg glass border border-gray-200 dark:border-[#30363d] focus:border-blue-500 outline-none text-sm"
-            />
-          </div>
-          <div className="flex gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-3 py-2 text-sm rounded-lg transition-colors ${
-                  filter === cat
-                    ? 'bg-blue-600 text-white'
-                    : 'glass glass-hover text-gray-600 dark:text-gray-400'
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+          {filters.map(f => (
+            <button
+              key={f.key}
+              onClick={() => setFilter(f.key)}
+              className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer
+                ${filter === f.key
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25 scale-105'
+                  : 'bg-gray-100 dark:bg-[#21262d] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#30363d] border border-gray-200 dark:border-[#30363d]'
                 }`}
-              >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </button>
-            ))}
-          </div>
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as typeof sort)}
-            className="px-3 py-2 rounded-lg glass border border-gray-200 dark:border-[#30363d] text-sm outline-none"
-          >
-            <option value="stars">Most Stars</option>
-            <option value="name">Name</option>
-          </select>
+            >
+              <span className="mr-1">{f.icon}</span>
+              {f.label}
+            </button>
+          ))}
         </div>
 
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.3, delay: idx * 0.05 }}
-              className="card-glow group overflow-hidden"
-            >
-              <div className="relative h-44 -mx-6 -mt-6 mb-4 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-[#161b22]/80 to-transparent" />
-                <div className="absolute bottom-3 left-3 flex gap-2">
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-2 py-1 text-xs rounded bg-white/90 dark:bg-[#21262d]/90 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filter}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {filtered.map((project, pIdx) => {
+              const accent = accentColors[project.category] || 'border-l-blue-500'
+              const dot = dotColors[project.category] || 'bg-blue-500'
+
+              return (
+                <motion.div
+                  key={project.id}
+                  custom={pIdx}
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-60px' }}
+                  whileHover={{ y: -5, transition: { duration: 0.25 } }}
+                  className={`card-glow relative overflow-hidden group border-l-4 ${accent} transition-shadow duration-300 hover:shadow-xl`}
+                >
+                  <div className="p-5">
+                    <div className="flex items-start gap-3 mb-4">
+                      <span className={`w-2 h-2 rounded-full ${dot} mt-1.5 flex-shrink-0`} />
+                      <h3 className="text-base font-bold text-white leading-snug group-hover:text-blue-400 transition-colors duration-300">
+                        {project.title}
+                      </h3>
+                    </div>
+
+                    <div className="space-y-3">
+                      <motion.div custom={0} variants={lineVariants} className="flex items-start gap-2.5">
+                        <span className="text-sm flex-shrink-0 mt-0.5">🎯</span>
+                        <p className="text-xs text-gray-400 leading-relaxed">
+                          <span className="text-gray-500 font-medium">Goal: </span>
+                          {project.goal}
+                        </p>
+                      </motion.div>
+
+                      <motion.div custom={1} variants={lineVariants} className="flex items-start gap-2.5">
+                        <span className="text-sm flex-shrink-0 mt-0.5">🛠️</span>
+                        <p className="text-xs text-gray-400 leading-relaxed">
+                          <span className="text-gray-500 font-medium">What I did: </span>
+                          {project.work}
+                        </p>
+                      </motion.div>
+
+                      <motion.div custom={2} variants={lineVariants} className="flex items-start gap-2.5">
+                        <span className="text-sm flex-shrink-0 mt-0.5">✅</span>
+                        <p className="text-xs text-gray-400 leading-relaxed">
+                          <span className="text-gray-500 font-medium">Outcome: </span>
+                          {project.outcome}
+                        </p>
+                      </motion.div>
+                    </div>
+
+                    <motion.div className="flex flex-wrap gap-1.5 mt-4 mb-4">
+                      {project.techStack.map((tech, tIdx) => (
+                        <motion.span
+                          key={tech}
+                          custom={tIdx}
+                          variants={tagVariants}
+                          whileHover={{ scale: 1.08, y: -1 }}
+                          className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/20 cursor-default select-none"
+                        >
+                          {tech}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.7 }}
+                      className="flex items-center gap-3 pt-2 border-t border-white/5"
                     >
-                      Live Demo
-                    </a>
-                  )}
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-2 py-1 text-xs rounded bg-white/90 dark:bg-[#21262d]/90 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    Source
-                  </a>
-                </div>
-              </div>
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-blue-400 transition-colors duration-200"
+                      >
+                        <motion.svg
+                          className="w-4 h-4"
+                          fill="currentColor" viewBox="0 0 24 24"
+                          whileHover={{ rotate: -5 }}
+                        >
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </motion.svg>
+                        <span className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-blue-400 after:transition-all after:duration-300 group-hover/link:after:w-full">
+                          View Source
+                        </span>
+                      </a>
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-green-400 transition-colors duration-200"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                          Live Demo
+                        </a>
+                      )}
+                    </motion.div>
+                  </div>
 
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {project.techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-0.5 text-[10px] rounded bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-4 text-xs text-gray-500">
-                <span className="flex items-center gap-1">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                  {project.stars}
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
-                  {project.forks}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                  <div
+                    className={`absolute -bottom-5 -right-5 w-14 h-14 rounded-full ${dot.replace('bg-', 'bg-').replace('-500', '-500/10')} blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:opacity-30 pointer-events-none`}
+                  />
+                </motion.div>
+              )
+            })}
+          </motion.div>
+        </AnimatePresence>
 
         {filtered.length === 0 && (
-          <p className="text-center text-gray-500 py-12">No projects found matching your criteria.</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-gray-500 py-12"
+          >
+            No projects found in this category.
+          </motion.p>
         )}
       </div>
     </section>
