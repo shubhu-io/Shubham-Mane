@@ -59,18 +59,20 @@ const categories = [
   {
     key: 'lang',
     label: 'Programming Languages',
-    subtitle: 'Scripting · Web · Backend',
+    subtitle: 'Scripting · Web · Backend · Config',
     icon: '💻',
     span: 'md:col-span-4',
-    count: 6,
-    sparkline: [60, 70, 55, 75, 65, 80],
+    count: 8,
+    sparkline: [60, 70, 55, 75, 65, 80, 72, 85],
     skills: [
       { name: 'Python', icon: '🐍', level: 4 },
       { name: 'JavaScript', icon: '🟨', level: 3 },
       { name: 'TypeScript', icon: '🔷', level: 3 },
       { name: 'HTML / CSS', icon: '🌐', level: 3 },
+      { name: 'Go', icon: '🔵', level: 2 },
       { name: 'Java', icon: '☕', level: 2 },
       { name: 'SQL', icon: '🗃️', level: 3 },
+      { name: 'YAML / JSON', icon: '📋', level: 4 },
     ],
   },
   {
