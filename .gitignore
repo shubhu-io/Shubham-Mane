@@ -8,3 +8,4 @@ dist
 *.log
 cache
 .vite
+.vscode
